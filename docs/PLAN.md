@@ -46,11 +46,11 @@ Goal: learn Unity fundamentals by building it right, from scratch.
 ## Phase 2 — Structure and documentation
 **Branch:** `chore/project-structure`
 
-- [ ] `docs/` folder at repo root (outside `Assets/`)
-  - [ ] `PLAN.md` — this plan
-  - [ ] `DEVLOG.md` — daily log (done, learned, problems, next)
-  - [ ] `TODO.md` — in progress, next, ideas, bugs, done
-- [ ] Folder structure in Unity:
+- [X] `docs/` folder at repo root (outside `Assets/`)
+  - [X] `PLAN.md` — this plan
+  - [X] `DEVLOG.md` — daily log (done, learned, problems, next)
+  - [X] `TODO.md` — in progress, next, ideas, bugs, done
+- [X] Folder structure in Unity:
   ```
   Assets/
     _Project/
@@ -60,8 +60,8 @@ Goal: learn Unity fundamentals by building it right, from scratch.
       Sprites/
       Audio/
   ```
-- [ ] Move `SampleScene` to `_Project/Scenes/` and rename it `Game` (inside Unity)
-- [ ] Commit, push, Pull Request, merge
+- [X] Move `SampleScene` to `_Project/Scenes/` and rename it `Game` (inside Unity)
+- [X] Commit, push, Pull Request, merge
 
 **Daily routine:** read the last DEVLOG "Next" and TODO "In progress" when starting; update both and commit when finishing.
 
@@ -69,15 +69,15 @@ Goal: learn Unity fundamentals by building it right, from scratch.
 
 ### 3.1–3.3 Player
 **Branch:** `feature/player-movement`
-- [ ] Player: square/circle with `Rigidbody2D` + `CircleCollider2D`
-- [ ] `PlayerController`: jump on click / space (set upward velocity)
-- [ ] Slight rotation based on vertical velocity
+- [X] Player: square/circle with `Rigidbody2D` + `CircleCollider2D`
+- [X] `PlayerController`: jump on click / space (set upward velocity)
+- [X] Slight rotation based on vertical velocity
 
 ### 3.4–3.5 Pipes
 **Branch:** `feature/pipes`
-- [ ] `Pipe` prefab: top and bottom rectangles with a gap
-- [ ] Move left and destroy when off-screen
-- [ ] `PipeSpawner`: spawn every X seconds at random heights
+- [X] `Pipe` prefab: top and bottom rectangles with a gap
+- [X] Move left and destroy when off-screen
+- [X] `PipeSpawner`: spawn every X seconds at random heights
 
 ### 3.6–3.8 Collisions and score
 **Branch:** `feature/collisions-and-score`
