@@ -1,10 +1,10 @@
 # ✅ TODO — Flappy Me
 
-## 🔥 In progress
-- [ ] Create `docs/` with PLAN, DEVLOG and TODO
-- [ ] Create `_Project` folder structure in Unity
-- [ ] Move `SampleScene` → `_Project/Scenes/Game`
-- [ ] Merge `chore/project-structure` into `main`
+## 🔥 DONE
+- [X] Create `docs/` with PLAN, DEVLOG and TODO
+- [X] Create `_Project` folder structure in Unity
+- [X] Move `SampleScene` → `_Project/Scenes/Game`
+- [X] Merge `chore/project-structure` into `main`
 
 ## 📋 Next
 - [ ] Player: shape with `Rigidbody2D` and jump
