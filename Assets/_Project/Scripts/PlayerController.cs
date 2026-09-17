@@ -21,10 +21,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver)
+        {
+            return;
+        }
+
         if (JumpPressed())
         {
             Jump();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameManager.Instance.GameOver();
     }
 
     private void FixedUpdate()
