@@ -4,6 +4,53 @@ Newest entries on top. Format: done, learned, problems, next.
 
 ---
 
+## 2026-09-17
+
+### ✅ Done
+**Collisions and score (Phase 3.6–3.8)** — `feature/collisions-and-score`
+- `Ground` and `Ceiling`: static colliders placed at Y -5.5 and 5.5, just outside the camera, so you only lose when actually leaving the screen.
+- `Player` tagged as `Player`.
+- `GameManager` (singleton) with score, game over and `Time.timeScale = 0`.
+- `OnCollisionEnter2D` on the player → Game Over.
+- `ScoreZone`: trigger child in the `Pipe` prefab that adds a point and disables itself.
+- First real playthrough: **score 14**.
+
+**Game flow and UI (Phase 4)** — `feature/game-flow`
+- Imported TMP Essential Resources.
+- `GameManager` rewritten with `GameState` enum: Ready → Playing → GameOver.
+- High score saved with `PlayerPrefs`.
+- `Restart()` reloads the scene with `SceneManager.LoadScene`.
+- `UIManager` separated from `GameManager` (logic vs presentation).
+- Player floats (gravity 0) until the first tap; `PipeSpawner` only spawns while Playing.
+- UI: `ScoreText`, `ReadyPanel` (title + "Tap to start"), `GameOverPanel` (score, best, Restart button).
+- 🎯 **Milestone 1: playable prototype** → tag `v0.1`.
+
+### 🧠 Learned
+- **Collision vs Trigger:** collision blocks and notifies; trigger (`Is Trigger`) is crossed and notifies. Score zones are triggers.
+- Static colliders (walls, ground) don't need a `Rigidbody2D`.
+- Colliders inherit the Transform scale, so Size stays at 1×1.
+- Tags identify objects by code: `CompareTag("Player")`.
+- **Singleton** (`static Instance`) gives global access without dragging references.
+- **Guard clauses** (`if (...) return;`) keep methods from running in the wrong state.
+- An `enum` for states is clearer and safer than several booleans.
+- `Time.timeScale = 0` freezes everything and is global: it must be reset to 1 on restart.
+- `PlayerPrefs` persists data between sessions.
+- `SceneManager.LoadScene(buildIndex)` is the simplest way to restart.
+- Separating `GameManager` (logic) from `UIManager` (presentation) keeps changes isolated.
+- UI needs: `Canvas` + `Canvas Scaler` (Scale With Screen Size, 1920×1080) + **`Graphic Raycaster`** + `EventSystem`.
+- Anchors decide what part of the screen an element is positioned against.
+- In the Hierarchy, elements further down are drawn on top; `Raycast Target` decides what steals clicks.
+
+### 🐛 Problems
+- Ground and ceiling didn't trigger Game Over → the whole collider component was disabled.
+- `ScoreText` ended up inside the `EventSystem` object; that object actually had `Canvas` + `Canvas Scaler` too (renamed it `UI`).
+- The Restart button did nothing → the Canvas was missing its **`Graphic Raycaster`**.
+
+### ➡️ Next
+- Phase 6: "Flappy Me" art on `feature/art`.
+
+---
+
 ## 2026-09-14
 
 ### ✅ Done
@@ -42,6 +89,7 @@ Newest entries on top. Format: done, learned, problems, next.
 | Gap size | 3 | `Top` Y 6.5 / `Bottom` Y -6.5, scale Y 10 |
 | Spawn Y range | -2 to 2 | |
 | Spawn / destroy X | 10 / -12 | Camera size 5 → visible Y -5 to 5 |
+| Ground / Ceiling Y | -5.5 / 5.5 | Just outside the camera |
 
 ### 🧠 Learned
 **Git**
@@ -74,9 +122,3 @@ Newest entries on top. Format: done, learned, problems, next.
 - Folders weren't created and the scene was loose in `_Project` → recreated inside Unity.
 - Jump felt weak and rapid taps "interrupted" the rise → by design; fixed with higher jumpForce + gravity.
 - Pipes looked wrong (one rectangle each) → there was a loose `Pipe` in the scene outside the spawner. **Lesson:** check the Hierarchy outside Play mode.
-
-### ➡️ Next
-- Phase 3.6–3.8 on `feature/collisions-and-score`:
-  - Ground and ceiling colliders.
-  - Game Over on collision.
-  - Score trigger in the pipe gap.
