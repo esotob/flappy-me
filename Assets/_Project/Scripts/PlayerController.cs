@@ -13,23 +13,34 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxDownAngle = -90f;
 
     private Rigidbody2D rb;
+    private float defaultGravity;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        defaultGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
     }
 
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver)
+        if (GameManager.Instance.State == GameManager.GameState.GameOver)
         {
             return;
         }
 
-        if (JumpPressed())
+        if (!JumpPressed())
         {
-            Jump();
+            return;
         }
+
+        if (GameManager.Instance.State == GameManager.GameState.Ready)
+        {
+            GameManager.Instance.StartGame();
+            rb.gravityScale = defaultGravity;
+        }
+
+        Jump();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
