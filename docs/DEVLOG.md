@@ -25,29 +25,94 @@ Newest entries on top. Format: done, learned, problems, next.
 - UI: `ScoreText`, `ReadyPanel` (title + "Tap to start"), `GameOverPanel` (score, best, Restart button).
 - 🎯 **Milestone 1: playable prototype** → tag `v0.1`.
 
+**Player art (Phase 6)** — `feature/art`
+- Character: me in a **wingsuit** ("traje de ardilla voladora"), pixel art made in Piskel, 32×32.
+- Tried a side-view reference and an orange suit → kept the **front view** and the **green suit**.
+- 3 frames: `player_up`, `player_mid`, `player_down` (only the arms/membrane move).
+- Import: **PPU 24** (sprite = 1.33 units), **Filter Mode Point**, **Compression None**.
+- `PlayerFly` animation clip + Animator Controller, ~10 samples.
+- Rotation reduced for the front view (`maxUpAngle` / `maxDownAngle`).
+- First PNGs stored with Git LFS.
+
+**Parallax background and ambient (Phase 5/6)** — `feature/parallax-background`
+- Sorting Layers: `Sky`, `Background`, `Ambient`, `Obstacles`, `Player`.
+- Backgrounds redone at the right scale (480×240 px → 20×10 units at PPU 24):
+  - `bg_sky`: dithered gradient + clouds.
+  - `bg_aqueduct`: Morelia's aqueduct in cantera rosa (8 arches, 60 px each) + sidewalk + street.
+  - `bg_trees`: dense forest drawn at 160×80 and scaled ×3 (chunky pixels, like my reference).
+- All layers are tileable (no visible seam).
+- `ParallaxLayer`: two copies per layer in a carousel; no state guard, so it also scrolls in the menu.
+- Ambient characters, downscaled from my own art:
+  - **Monarch butterfly** 🦋 (19×22 px, 3 frames, 12 samples).
+  - **Viejito** from the *Danza de los Viejitos* 👴 (28×44 px, 3 frames, 6 samples), walking on the sidewalk.
+- `AmbientMover`: reusable script (speed + optional sine wave), destroys itself when leaving the camera on either side.
+- `AmbientSpawner`: reusable spawner with random interval, **spawn on start** and **max alive**.
+
+### 🎛️ Tuning values
+| Setting | Value | Notes |
+|---|---|---|
+| Player PPU | 24 | 32 looked too small |
+| Background PPU / tileWidth | 24 / 20 | 480 px ÷ 24 = 20 units |
+| Parallax speeds | Sky 0.2 · Trees 0.5 · Aqueduct 1.0 | Farther = slower |
+| Sidewalk top | Y -3.83 | (120 − 212) ÷ 24 |
+| Old man Y | -2.92 | Sidewalk + half his height |
+| Old man speed | 0.5 facing right / 1.5 flipped | Relative to the aqueduct layer (1.0) to avoid foot sliding |
+| Butterfly | speed 2, wave 0.4, freq 3 | |
+| Max alive | Old man 1 · Butterflies 3 | |
+
 ### 🧠 Learned
-- **Collision vs Trigger:** collision blocks and notifies; trigger (`Is Trigger`) is crossed and notifies. Score zones are triggers.
+**Physics and game logic**
+- **Collision vs Trigger:** collision blocks and notifies; trigger (`Is Trigger`) is crossed and notifies.
 - Static colliders (walls, ground) don't need a `Rigidbody2D`.
 - Colliders inherit the Transform scale, so Size stays at 1×1.
 - Tags identify objects by code: `CompareTag("Player")`.
 - **Singleton** (`static Instance`) gives global access without dragging references.
-- **Guard clauses** (`if (...) return;`) keep methods from running in the wrong state.
-- An `enum` for states is clearer and safer than several booleans.
-- `Time.timeScale = 0` freezes everything and is global: it must be reset to 1 on restart.
+- **Guard clauses** keep methods from running in the wrong state.
+- An `enum` for states is clearer than several booleans.
+- `Time.timeScale = 0` freezes everything and is global: reset it to 1 on restart.
 - `PlayerPrefs` persists data between sessions.
-- `SceneManager.LoadScene(buildIndex)` is the simplest way to restart.
-- Separating `GameManager` (logic) from `UIManager` (presentation) keeps changes isolated.
-- UI needs: `Canvas` + `Canvas Scaler` (Scale With Screen Size, 1920×1080) + **`Graphic Raycaster`** + `EventSystem`.
+
+**UI**
+- UI needs `Canvas` + `Canvas Scaler` (Scale With Screen Size, 1920×1080) + **`Graphic Raycaster`** + `EventSystem`.
 - Anchors decide what part of the screen an element is positioned against.
-- In the Hierarchy, elements further down are drawn on top; `Raycast Target` decides what steals clicks.
+- Elements further down in the Hierarchy are drawn on top; `Raycast Target` decides what steals clicks.
+
+**Art and animation**
+- **Pixels Per Unit:** size in units = pixels ÷ PPU. Scale pixel art with PPU, not with the Transform.
+- **Filter Mode Point** keeps pixel art sharp; Bilinear blurs it.
+- Huge "pixel art style" images don't work as sprites: they must be drawn (or reduced) at the real pixel size.
+- **Animation** = the clip (frames); **Animator** = the state machine that picks the clip. Sample rate sets the speed.
+- In a flap animation only the limbs move; head and body stay on the same pixels.
+- The player must always contrast with obstacles and background.
+- **Layer** (physics/cameras) ≠ **Sorting Layer** (draw order, in the Sprite Renderer → Additional Settings).
+- **Parallax:** far layers move slower. Tileable images: the right edge continues the left one.
+- **Foot sliding:** a walker's speed must be relative to the ground layer's speed.
+- Gameplay should be predictable (fixed pipe interval); ambient should feel random.
+- **Reuse:** one script with parameters (`AmbientMover`, `AmbientSpawner`) instead of one per object.
+- `Mathf.Sin` + a random offset → natural, non-synchronized floating motion.
+- Camera bounds: half width = `orthographicSize * aspect`.
+
+**Unity / Git**
+- The Inspector shows **local** position for children; scripts using `transform.position` use **world** position.
+- `transform.childCount` is an easy way to count spawned objects.
+- Git collapses new folders in `git status`; use `git status -u` to see every file.
+- `git lfs ls-files` confirms which files are stored in LFS.
 
 ### 🐛 Problems
-- Ground and ceiling didn't trigger Game Over → the whole collider component was disabled.
-- `ScoreText` ended up inside the `EventSystem` object; that object actually had `Canvas` + `Canvas Scaler` too (renamed it `UI`).
-- The Restart button did nothing → the Canvas was missing its **`Graphic Raycaster`**.
+- Ground and ceiling didn't trigger Game Over → the collider component was disabled.
+- `ScoreText` ended up inside the `EventSystem` object, which also had the `Canvas` → renamed it `UI`.
+- Restart button did nothing → the Canvas was missing its **`Graphic Raycaster`**.
+- "Traje de ardilla" meant a wingsuit, not a squirrel costume 😅
+- Side-view reference didn't look right → kept the front view.
+- Background and ambient images were ~1250–1774 px → redrew the backgrounds at 480×240 and downscaled the characters.
+- Trees took three iterations (generic domes → individual trees → dense chunky forest).
+- Looked for sorting layers in the wrong dropdown (Layer vs Sorting Layer).
+- Thought ambient objects weren't destroyed → the Inspector showed local X; also added camera-based limits for both directions.
 
 ### ➡️ Next
-- Phase 6: "Flappy Me" art on `feature/art`.
+- Review the trees.
+- Decide the obstacles (pipes are still placeholders).
+- Street lamps + day/night cycle.
 
 ---
 
