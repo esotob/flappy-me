@@ -1,13 +1,11 @@
 # ✅ TODO — Flappy Me
 
 ## 🔥 In progress
-- [ ] Commit, PR and merge `feature/parallax-background`
+- [ ] Commit, PR and merge the cantera pillars
 
 ## 📋 Next
 **Art (Phase 6)**
 - [ ] 🌳 Review the trees (the only thing not 100% convincing yet)
-- [ ] Decide the obstacles (pipes are still placeholders): cantera columns, cathedral towers, yácatas...
-- [ ] Obstacle sprites: tileable body + cap (`Draw Mode: Tiled`)
 - [ ] Align the `Ground` collider with the sidewalk (Y ≈ -4.33) and check pipe `minY` (-1.5?)
 - [ ] `player_hit` pose for Game Over
 - [ ] UI font and styling
@@ -80,3 +78,4 @@
 - [x] `ParallaxLayer` with 3 layers
 - [x] Monarch butterfly and viejito animations + prefabs
 - [x] `AmbientMover` (camera-based destroy) and `AmbientSpawner` (spawn on start, max alive)
+- [x] Obstacles: cantera block pillars (tileable body + cap) replacing the grey rectangles

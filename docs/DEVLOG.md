@@ -4,6 +4,47 @@ Newest entries on top. Format: done, learned, problems, next.
 
 ---
 
+## 2026-09-23
+
+### ✅ Done
+**Obstacles (Phase 6)** — `feature/art`
+- Decided the obstacles: **cantera block pillars** (tried cathedral towers first, too ornate).
+- Two sprites instead of one: `pillar_body` (32×24, tiles vertically) and `pillar_cap` (40×16, overhangs the body).
+- Palette: same cantera family as the aqueduct but **darker and more saturated, with a strong outline**, so foreground and background don't blend (atmospheric perspective). Lightened once after the first version.
+- Import settings for tiling: **Wrap Mode Repeat** + **Mesh Type Full Rect**, plus PPU 24 / Point / no compression.
+- `Pipe` prefab rebuilt with four pieces:
+
+| Piece | Position Y | Draw Mode | Size | Flip Y |
+|---|---|---|---|---|
+| `BottomCap` | -1.83 | Simple | — | — |
+| `BottomBody` | -7.17 | Tiled | 1.33 × 10 | — |
+| `TopCap` | 1.83 | Simple | — | ✅ |
+| `TopBody` | 7.17 | Tiled | 1.33 × 10 | ✅ |
+
+- One `BoxCollider2D` per tower, on the `Body`: size 1.33 × 10.67, offset Y +0.33 (bottom) / -0.33 (top), so it also covers the cap.
+- Removed the stray `PLAN.md` from the repo root (the real one lives in `docs/`).
+- Claude now has access to the repo folder to keep `docs/` updated (docs only — scripts and assets stay hand-made).
+
+### 🧠 Learned
+- **Draw Mode: Tiled** repeats a sprite to fill a size, which is how pipes/pillars of any height are built. It needs **Wrap Mode Repeat** and **Mesh Type Full Rect**.
+- With Tiled, the size comes from the Sprite Renderer's **Size** field, never from the Transform scale (scaling would stretch the pixels).
+- Obstacles are built as **tileable body + cap**, the same way the original Flappy Bird does it.
+- Foreground vs background separation is about **value and saturation**, not only hue: same stone, darker and more contrasted in front.
+- The collider is deliberately **narrower than the cap**: the cap overhangs, and a forgiving hitbox feels fairer.
+- Fewer, longer colliders are simpler than one per visual piece.
+
+### 🐛 Problems
+- Cathedral towers looked like chimneys at first (too narrow, too close in color to the aqueduct) → widened, darkened, and finally replaced by plain blocks.
+- The prefab pieces ended up nested inside empty GameObjects, and the top pieces had negative Y → flattened the hierarchy and fixed the signs.
+- The cap looked like it had no collision: the body collider offsets were inverted, so it didn't reach the gap edge.
+
+### ➡️ Next
+- Review the trees.
+- Street lamps + day/night cycle.
+- Phase 5: progressive difficulty and camera shake.
+
+---
+
 ## 2026-09-17
 
 ### ✅ Done
