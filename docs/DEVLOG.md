@@ -23,6 +23,7 @@ Newest entries on top. Format: done, learned, problems, next.
 
 - One `BoxCollider2D` per tower, on the `Body`: size 1.33 × 10.67, offset Y +0.33 (bottom) / -0.33 (top), so it also covers the cap.
 - Removed the stray `PLAN.md` from the repo root (the real one lives in `docs/`).
+- **Decision:** keep `Ground` at Y -5.5 (screen edge) instead of aligning it with the sidewalk. The sidewalk and street belong to a scrolling background layer, so the player flies in front of them; dying at the screen edge gives more play space and more depth. Same idea as the original Flappy Bird, where the ground is a framing limit, not a world object.
 - Claude now has access to the repo folder to keep `docs/` updated (docs only — scripts and assets stay hand-made).
 
 ### 🧠 Learned
