@@ -3,7 +3,6 @@ using UnityEngine;
 public class PipeSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject pipePrefab;
-    [SerializeField] private float spawnInterval = 1.8f;
     [SerializeField] private float minY = -2f;
     [SerializeField] private float maxY = 2f;
 
@@ -18,7 +17,7 @@ public class PipeSpawner : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        if (timer >= spawnInterval)
+        if (timer >= GameManager.Instance.SpawnInterval)
         {
             SpawnPipe();
             timer = 0f;
