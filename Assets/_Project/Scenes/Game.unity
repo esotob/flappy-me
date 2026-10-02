@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShake
   duration: 0.3
-  magnitude: 0.25
+  magnitude: 0.35
 --- !u!1 &542822865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,8 +1622,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ui: {fileID: 1079211997}
-  baseSpeed: 3
-  maxSpeed: 5.5
+  baseSpeed: 3.5
+  maxSpeed: 6
   scoreForMaxSpeed: 25
   pipeSpacing: 5.4
   cameraShake: {fileID: 519420033}
