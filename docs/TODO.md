@@ -1,7 +1,7 @@
 # ✅ TODO — Flappy Me
 
 ## 🔥 In progress
-- [ ] Commit, PR and merge the cantera pillars
+- [ ] Commit, PR and merge `feature/game-feel`
 
 ## 📋 Next
 **Art (Phase 6)**
@@ -17,9 +17,10 @@
 - [ ] Lamps turn on at night (glow / Light 2D) to set the mood
 
 **Phase 5 — Game feel** — `feature/game-feel`
-- [ ] Progressive difficulty (speed / gap by score)
-- [ ] Camera shake on hit
-- [ ] Final tuning pass
+- [x] Progressive difficulty (speed up, spacing fixed)
+- [x] Camera shake on hit
+- [ ] Final tuning pass (play a few full runs and check the ramp feels right)
+- [ ] Optional: also shrink the gap at high scores
 
 **Phase 7 — Audio** — `feature/audio`
 - [ ] Jump, score and hit sounds
