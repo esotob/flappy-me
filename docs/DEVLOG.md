@@ -4,6 +4,46 @@ Newest entries on top. Format: done, learned, problems, next.
 
 ---
 
+## 2026-10-01
+
+### ✅ Done
+**Game feel (Phase 5)** — `feature/game-feel`
+- **Progressive difficulty** driven by the `GameManager`:
+  - `PipeSpeed` interpolates from `baseSpeed` to `maxSpeed` as the score approaches `scoreForMaxSpeed`.
+  - `SpawnInterval` is derived: `pipeSpacing / PipeSpeed`, so pipes keep the same distance and only arrive sooner.
+  - `Pipe` reads its speed from the `GameManager` when it spawns; `PipeSpawner` reads the interval every frame.
+- **Camera shake** on Game Over: `CameraShake` coroutine on `Main Camera`, called from `GameManager.GameOver()`.
+
+### 🎛️ Tuning values
+| Setting | Value |
+|---|---|
+| `baseSpeed` | 3.5 |
+| `maxSpeed` | 6 |
+| `scoreForMaxSpeed` | 25 |
+| `pipeSpacing` | 5.4 (interval = 1.54 s at the start, 0.9 s at top speed) |
+| Shake `magnitude` | 0.35 |
+| Shake `duration` | 0.3 |
+
+### 🧠 Learned
+- Distance between pipes = speed × interval. Raising only the speed makes the game **easier**; fixing the spacing and deriving the interval is what actually reduces reaction time.
+- **Properties with `get`** are read like variables but recalculated on every access, so they always reflect the current score.
+- `Mathf.Lerp(a, b, t)` + `Mathf.Clamp01` is the standard way to ramp a value smoothly between two bounds.
+- Each pipe takes its speed when it spawns and keeps it, so difficulty ramps up gradually instead of jumping.
+- **Coroutines** (`IEnumerator` + `yield return null`) run across frames: the right tool for timed effects.
+- **`Time.unscaledDeltaTime`** ignores `Time.timeScale`, which is why the shake still plays while the game is frozen at Game Over.
+- A shake must **damp out** and restore the original position, or the camera ends up off-center.
+- Keeping a serialized reference (instead of `GetComponent` at runtime) makes a missing link obvious in the Inspector.
+
+### 🐛 Problems
+- Couldn't find `duration` / `magnitude` in the Inspector: they were being looked for in the `GameManager`'s reference field instead of on `Main Camera`, where the component actually lives.
+
+### ➡️ Next
+- `player_hit` pose + Animator state.
+- Audio (jump, score, hit).
+- Street lamps + day/night cycle.
+
+---
+
 ## 2026-09-23
 
 ### ✅ Done
