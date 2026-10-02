@@ -6,7 +6,6 @@
 ## 📋 Next
 **Art (Phase 6)**
 - [ ] 🌳 Review the trees (the only thing not 100% convincing yet)
-- [ ] Align the `Ground` collider with the sidewalk (Y ≈ -4.33) and check pipe `minY` (-1.5?)
 - [ ] `player_hit` pose for Game Over
 - [ ] UI font and styling
 - [ ] App icon
