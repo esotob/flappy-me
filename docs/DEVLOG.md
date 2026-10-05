@@ -4,6 +4,36 @@ Newest entries on top. Format: done, learned, problems, next.
 
 ---
 
+## 2026-10-05
+
+### ✅ Done
+**Audio (Phase 7)** — `feature/audio`
+- Three 8-bit style effects made with **jsfxr** (sfxr.me): `sfx_jump`, `sfx_score`, `sfx_hit`.
+- Import settings: Decompress On Load, Preload Audio Data, Force To Mono.
+- `AudioManager`: singleton with one `AudioSource`, three clips and a volume slider; plays everything with `PlayOneShot`.
+- Hooked up: jump in `PlayerController.Jump()`, point in `GameManager.AddScore()`, hit in `GameManager.GameOver()`.
+- Trimmed the leading silence of `sfx_hit` in **Audacity** — that was what made the hit feel late.
+
+### 🧠 Learned
+- `PlayOneShot` layers sounds instead of cutting the previous one, which `Play()` would do.
+- `AudioSource` is the player, `AudioListener` (on the camera) is the ear.
+- Audio ignores `Time.timeScale`, so the hit still plays while the game is frozen.
+- Effects should be very short: the jump sound repeats hundreds of times per run, and it works better quieter than the rest.
+- `[Range(0f, 1f)]` turns an Inspector field into a slider.
+- A null check on the clip keeps a missing reference from throwing at runtime.
+- Three things can make a sound feel late: **leading silence in the file**, the **DSP buffer size** (Project Settings → Audio → Best latency), and a **hitbox smaller than the sprite** (the eye sees the impact before physics registers it).
+
+### 🐛 Problems
+- The hit sound felt out of sync → the WAV had silence at the start; fixed in Audacity.
+
+### ➡️ Next
+- `player_hit` pose + Animator state.
+- Street lamps + day/night cycle.
+- Review the trees.
+- Build WebGL → itch.io.
+
+---
+
 ## 2026-10-01
 
 ### ✅ Done

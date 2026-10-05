@@ -1,7 +1,7 @@
 # ✅ TODO — Flappy Me
 
 ## 🔥 In progress
-- [ ] Commit, PR and merge `feature/game-feel`
+- [ ] Commit, PR and merge `feature/audio`
 
 ## 📋 Next
 **Art (Phase 6)**
@@ -23,8 +23,10 @@
 - [ ] Optional: also shrink the gap at high scores
 
 **Phase 7 — Audio** — `feature/audio`
-- [ ] Jump, score and hit sounds
+- [x] Jump, score and hit sounds
 - [ ] Optional background music
+- [ ] Optional: per-sound volume (the jump one wants to be quieter)
+- [ ] Optional: mute button
 
 **Phase 8 — Build and release** — `chore/release`
 - [ ] Windows build

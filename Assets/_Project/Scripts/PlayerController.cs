@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        AudioManager.Instance.PlayJump();
     }
 
     private void RotateByVelocity()
