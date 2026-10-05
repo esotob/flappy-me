@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
         }
 
         score++;
+        AudioManager.Instance.PlayScore();
         ui.UpdateScore(score);
     }
 
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
 
         ui.ShowGameOver(score, highScore);
         ui.ShowGameOver(score, highScore);
+        AudioManager.Instance.PlayHit();
         cameraShake.Shake();
         Time.timeScale = 0f;
     }
